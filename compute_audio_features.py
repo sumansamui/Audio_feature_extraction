@@ -92,6 +92,21 @@ plt.colorbar(format="%+2.0f dB")
 plt.title("Spectrogram (dB)")
 plt.savefig(os.path.join(config.path_to_plots,'log_spectrogram.png'))
 
+#Log_MEL_Filter_Bank_Energies (Log_mel_spectrogram)
+mel_spectrogram = librosa.feature.melspectrogram(signal, sr=sample_rate, n_fft=n_fft, hop_length=hop_length, n_mels=128)
+log_mel_spectrogram= librosa.power_to_db(mel_spectrogram)
+
+
+plt.figure(figsize=config.FIG_SIZE)
+librosa.display.specshow(log_mel_spectrogram, sr=sample_rate, hop_length=hop_length)
+plt.xlabel("Time")
+plt.ylabel("Frequency")
+plt.colorbar(format="%+2.0f dB")
+plt.title("Log-Mel-Spectrogram (dB)")
+plt.savefig(os.path.join(config.path_to_plots,'log_Mel_spectrogram.png'))
+
+
+
 
 # MFCCs
 # extract 13 MFCCs
@@ -114,6 +129,7 @@ plt.savefig(os.path.join(config.path_to_plots,'mfcc.png'))
 
 print('waveform:'+ str(signal.shape))
 print('spectrum:'+ str(left_spectrum.shape))
-print('spectrogram:'+ str(spectrogram.shape))
-print('log_spectrogram:'+ str(log_spectrogram.shape))
-print('MFCCs:'+ str(MFCCs.shape))
+print('spectrogram:'+ str(spectrogram.T.shape))
+print('log_spectrogram:'+ str(log_spectrogram.T.shape))
+print('log_Mel_spectrogram:'+ str(log_spectrogram.T.shape))
+print('MFCCs:'+ str(MFCCs.T.shape))
